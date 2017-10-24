@@ -634,7 +634,7 @@ class DockerEnvironment(BuildEnvironment):
                                  exit=DOCKER_TIMEOUT_EXIT_CODE)),
                 name=self.container_id,
                 hostname=self.container_id,
-                host_config=create_host_config(binds={
+                host_config=client.create_host_config(binds={
                     SPHINX_TEMPLATE_DIR: {
                         'bind': SPHINX_TEMPLATE_DIR,
                         'mode': 'ro'
@@ -647,10 +647,11 @@ class DockerEnvironment(BuildEnvironment):
                         'bind': self.project.doc_path,
                         'mode': 'rw'
                     },
-                }),
+                },
+                    mem_limit=self.container_mem_limit,
+                ),
                 detach=True,
                 environment=self.environment,
-                mem_limit=self.container_mem_limit,
             )
             client.start(container=self.container_id)
             self.change_build_user_uid()
