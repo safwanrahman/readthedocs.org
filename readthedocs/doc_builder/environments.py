@@ -608,6 +608,18 @@ class DockerEnvironment(BuildEnvironment):
                     (_('Build exited due to unknown error: {0}')
                      .format(state.get('Error'))))
 
+    def change_build_user_uid(self):
+        client = self.get_client()
+        exec_cmd = client.exec_create(
+            container=self.container_id,
+            cmd=['usermod', '-u', str(os.getuid()), 'docs'],
+            stdout=True,
+            stderr=True,
+            user='root'
+        )
+
+        output = client.exec_start(exec_id=exec_cmd['Id'], stream=False)
+
     def create_container(self):
         """Create docker container"""
         client = self.get_client()
@@ -641,6 +653,7 @@ class DockerEnvironment(BuildEnvironment):
                 mem_limit=self.container_mem_limit,
             )
             client.start(container=self.container_id)
+            self.change_build_user_uid()
         except DockerAPIError as e:
             log.error(LOG_TEMPLATE
                       .format(
