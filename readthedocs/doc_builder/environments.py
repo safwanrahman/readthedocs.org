@@ -5,6 +5,7 @@ from builtins import str
 from builtins import object
 import os
 import re
+import time
 import sys
 import logging
 import subprocess
@@ -609,7 +610,10 @@ class DockerEnvironment(BuildEnvironment):
                      .format(state.get('Error'))))
 
     def change_build_user_uid(self):
+        start = time.time()
         client = self.get_client()
+        print("get client", time.time() - start)
+        start = time.time()
         exec_cmd = client.exec_create(
             container=self.container_id,
             cmd=['usermod', '-u', str(os.getuid()), 'docs'],
@@ -617,8 +621,11 @@ class DockerEnvironment(BuildEnvironment):
             stderr=True,
             user='root'
         )
+        print("exec_cmd", time.time() - start)
 
+        start = time.time()
         output = client.exec_start(exec_id=exec_cmd['Id'], stream=False)
+        print("exec_start", time.time() - start)
 
     def create_container(self):
         """Create docker container"""
