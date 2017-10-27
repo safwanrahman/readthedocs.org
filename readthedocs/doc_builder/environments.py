@@ -663,7 +663,7 @@ class DockerEnvironment(BuildEnvironment):
             client.start(container=self.container_id)
             import time
             start = time.time()
-            self.change_build_user_uid()
+            # self.change_build_user_uid()
             print(time.time() - start)
         except DockerAPIError as e:
             log.error(LOG_TEMPLATE
