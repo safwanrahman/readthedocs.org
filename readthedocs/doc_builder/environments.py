@@ -616,7 +616,7 @@ class DockerEnvironment(BuildEnvironment):
         start = time.time()
         exec_cmd = client.exec_create(
             container=self.container_id,
-            cmd=['usermod', '-u', str(os.getuid()), 'docs'],
+            cmd=['usermod', '-aG', str(os.getgid()), 'docs'],
             stdout=True,
             stderr=True,
             user='root'
