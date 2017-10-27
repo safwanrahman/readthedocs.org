@@ -10,7 +10,7 @@ import logging
 import subprocess
 import traceback
 import socket
-from datetime import datetime, time
+from datetime import datetime
 
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _, ugettext_noop
@@ -654,6 +654,7 @@ class DockerEnvironment(BuildEnvironment):
                 environment=self.environment,
             )
             client.start(container=self.container_id)
+            import time
             start = time.time()
             self.change_build_user_uid()
             print(time.time() - start)
