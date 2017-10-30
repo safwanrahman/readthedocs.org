@@ -516,7 +516,7 @@ class DockerEnvironment(BuildEnvironment):
             os.makedirs(self.project.doc_path)
 
         # chmod the directory so the docker user has write permission
-        os.chmod(self.project.doc_path, 0777)
+        os.system("chmod -R 777 {}".format(self.project.doc_path))
 
         try:
             self.create_container()
