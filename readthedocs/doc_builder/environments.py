@@ -514,8 +514,9 @@ class DockerEnvironment(BuildEnvironment):
         # Create the checkout path if it doesn't exist to avoid Docker creation
         if not os.path.exists(self.project.doc_path):
             os.makedirs(self.project.doc_path)
-            print("ddddd")
-            os.chmod(self.project.doc_path, 0777)
+
+        # chmod the directory so the docker user has write permission
+        os.chmod(self.project.doc_path, 0777)
 
         try:
             self.create_container()
