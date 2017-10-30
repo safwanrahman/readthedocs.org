@@ -532,8 +532,8 @@ class DockerEnvironment(BuildEnvironment):
         # Update buildenv state given any container error states first
         self.update_build_from_container_state()
 
-        # chmod the directory so the host user has write permission
-        os.chmod(self.project.doc_path, 0777)
+        # chmod the directory so the docker user has write permission
+        os.system("chmod -R 777 {}".format(self.project.doc_path))
 
         client = self.get_client()
         try:
