@@ -65,6 +65,7 @@ class CommunityDevSettings(CommunityBaseSettings):
 
     # https://github.com/rtfd/readthedocs.org/pull/3243#issuecomment-343551486
     DOCKER_VERSION = '1.17'
+    SYNC_USER = 'safwan'
 
 
     @property
