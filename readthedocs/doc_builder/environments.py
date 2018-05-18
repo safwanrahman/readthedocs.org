@@ -228,7 +228,7 @@ class DockerBuildCommand(BuildCommand):
                                        cmd="/bin/sh -c 'mkdir /app/user_builds/kitsune/envs'",
                                        stdout=True, stderr=True)
             output = client.exec_start(exec_id=first['Id'], stream=False)
-            log.info(output)
+            log.info(output.decode('utf-8', 'replace'))
             exec_cmd = client.exec_create(
                 container=self.build_env.container_id,
                 cmd=self.get_wrapped_command(),
