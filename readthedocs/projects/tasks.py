@@ -93,8 +93,6 @@ class SyncRepositoryMixin(object):
         # Make Dirs
         if not os.path.exists(self.project.doc_path):
             os.makedirs(self.project.doc_path)
-            # Give permission to other users
-            os.chmod(self.project.doc_path, 0777)
 
         if not self.project.vcs_repo():
             raise RepositoryError(
@@ -152,6 +150,8 @@ class SyncRepositoryMixin(object):
                 log.exception('Sync Versions Exception')
             except Exception:
                 log.exception('Unknown Sync Versions Exception')
+
+        os.system('chmod 777 -R {}'.format(self.project.doc_path))
 
     # TODO this is duplicated in the classes below, and this should be
     # refactored out anyways, as calling from the method removes the original
