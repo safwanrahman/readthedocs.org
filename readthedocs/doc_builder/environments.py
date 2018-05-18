@@ -275,7 +275,7 @@ class DockerBuildCommand(BuildCommand):
         prefix = ''
         if self.bin_path:
             prefix += 'PATH={0}:$PATH '.format(self.bin_path)
-        return ("/bin/sh -c 'cd {cwd} {prefix}{cmd}'"
+        return ("/bin/sh -c 'cd {cwd} && {prefix}{cmd}'"
                 .format(
                     cwd=self.cwd,
                     prefix=prefix,
