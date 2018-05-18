@@ -15,6 +15,9 @@ services:
       # mount docker unix socket to be able to run containers in the host from inside this container
       - /var/run/docker.sock:/var/run/docker.sock
       - ./:/app
+      - type: bind
+        source: user_builds
+        target: /app/user/builds
     environment:
       DJANGO_SETTINGS_MODULE: readthedocs.settings.docker
       DJANGO_SETTINGS_SKIP_LOCAL: 1
@@ -24,5 +27,8 @@ services:
 
   redis:
     image: redis
+
+  volumes:
+    user_builds:
 
   # TODO: run celery workers
