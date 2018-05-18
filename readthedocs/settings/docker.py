@@ -61,7 +61,7 @@ class CommunityDevSettings(CommunityBaseSettings):
     DOCKER_ENABLE = True
 
     # https://github.com/rtfd/readthedocs.org/pull/3152#issuecomment-339573168
-    DOCKER_IMAGE = 'readthedocs/build:dev'
+    DOCKER_IMAGE = 'readthedocs/build:latest'
 
     # https://github.com/rtfd/readthedocs.org/pull/3243#issuecomment-343551486
     DOCKER_VERSION = '1.37'
