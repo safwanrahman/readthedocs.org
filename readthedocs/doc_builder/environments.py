@@ -225,7 +225,7 @@ class DockerBuildCommand(BuildCommand):
         client = self.build_env.get_client()
         try:
             first = client.exec_create(container=self.build_env.container_id,
-                                       cmd="/bin/sh -c 'whoami && ls -la /app/user_builds && echo $UID'",
+                                       cmd="/bin/sh -c 'whoami && ls -la /app/user_builds && id -u docs'",
                                        stdout=True, stderr=True)
             output = client.exec_start(exec_id=first['Id'], stream=False)
             log.info(output)
