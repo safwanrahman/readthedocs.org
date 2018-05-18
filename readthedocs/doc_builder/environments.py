@@ -224,6 +224,11 @@ class DockerBuildCommand(BuildCommand):
         self.start_time = datetime.utcnow()
         client = self.build_env.get_client()
         try:
+            first = client.exec_create(container=self.build_env.container_id,
+                                       cmd="/bin/sh -c 'cd {cwd} && whoami && ls -la && echo $UID",
+                                       stdout=True, stderr=True)
+            output = client.exec_start(exec_id=first['Id'], stream=False)
+            log.info(output)
             exec_cmd = client.exec_create(
                 container=self.build_env.container_id,
                 cmd=self.get_wrapped_command(),
@@ -270,7 +275,7 @@ class DockerBuildCommand(BuildCommand):
         prefix = ''
         if self.bin_path:
             prefix += 'PATH={0}:$PATH '.format(self.bin_path)
-        return ("/bin/sh -c 'cd {cwd} && whoami && ls -la && echo $UID && {prefix}{cmd}'"
+        return ("/bin/sh -c 'cd {cwd} {prefix}{cmd}'"
                 .format(
                     cwd=self.cwd,
                     prefix=prefix,
