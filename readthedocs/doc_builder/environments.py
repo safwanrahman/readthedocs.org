@@ -776,7 +776,6 @@ class DockerBuildEnvironment(BuildEnvironment):
             },
             self.project.doc_path: {
                 'bind': self.project.doc_path,
-                'mode': 'rw:z',
             },
         }
 
