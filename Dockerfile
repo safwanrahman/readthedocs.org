@@ -6,7 +6,21 @@ ENV LANG C.UTF-8
 # System dependencies
 RUN apt-get -y update && apt-get -y install git-core postgresql-client \
                                             python-pip wget python3 python3-venv \
-                                            libxml2-dev libxslt-dev zlib1g-dev docker.io
+                                            libxml2-dev libxslt-dev zlib1g-dev \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    software-properties-common
+
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+
+RUN add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+
+RUN apt-get -y update
+RUN apt-get -y install docker-ce
 
 WORKDIR /app
 
@@ -15,9 +29,7 @@ RUN groupadd --gid 205 docs
 RUN useradd -m --uid 1005 --gid 205 docs
 
 # Create directory for user builds
-RUN mkdir /app/user_builds
-RUN chown -R docs:docs /app/user_builds
-VOLUME /app/user_builds
+RUN mkdir -m 777 /app/user_builds
 
 # Download latest pip requirements for the project
 RUN pip install -U pip

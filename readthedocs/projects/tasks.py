@@ -151,7 +151,7 @@ class SyncRepositoryMixin(object):
             except Exception:
                 log.exception('Unknown Sync Versions Exception')
 
-        os.system('chmod 777 -R {}'.format(self.project.doc_path))
+        os.system('chown -R docs:docs {}'.format(self.project.doc_path))
 
     # TODO this is duplicated in the classes below, and this should be
     # refactored out anyways, as calling from the method removes the original

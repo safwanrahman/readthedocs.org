@@ -3,7 +3,7 @@ version: '3.3'
 services:
 
   readthedocs:
-    user: ${UID:-1000}
+    user: root
     build: .
     command: python manage.py runserver 0.0.0.0:8000
     ports:
@@ -15,9 +15,7 @@ services:
       # mount docker unix socket to be able to run containers in the host from inside this container
       - /var/run/docker.sock:/var/run/docker.sock
       - ./:/app
-      - type: bind
-        source: user_builds
-        target: /app/user/builds
+      - user_builds:/app/user_builds
     environment:
       DJANGO_SETTINGS_MODULE: readthedocs.settings.docker
       DJANGO_SETTINGS_SKIP_LOCAL: 1
