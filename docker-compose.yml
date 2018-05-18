@@ -28,7 +28,7 @@ services:
   redis:
     image: redis
 
-  volumes:
-    user_builds:
+volumes:
+  user_builds:
 
   # TODO: run celery workers
