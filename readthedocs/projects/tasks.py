@@ -93,6 +93,8 @@ class SyncRepositoryMixin(object):
         # Make Dirs
         if not os.path.exists(self.project.doc_path):
             os.makedirs(self.project.doc_path)
+            # Give permission to other users
+            os.chmod(self.project.doc_path, 0777)
 
         if not self.project.vcs_repo():
             raise RepositoryError(
