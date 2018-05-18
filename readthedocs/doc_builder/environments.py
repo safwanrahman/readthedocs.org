@@ -225,7 +225,7 @@ class DockerBuildCommand(BuildCommand):
         client = self.build_env.get_client()
         try:
             first = client.exec_create(container=self.build_env.container_id,
-                                       cmd="/bin/sh -c 'whoami && mkdir /app/user_builds/kitsune && id -u docs'",
+                                       cmd="/bin/sh -c 'python2.7 -mvirtualenv --no-site-packages --no-download /app/user_builds/kitsune/envs/latest'",
                                        stdout=True, stderr=True)
             output = client.exec_start(exec_id=first['Id'], stream=False)
             log.info(output)
